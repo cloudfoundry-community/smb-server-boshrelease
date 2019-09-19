@@ -1,0 +1,46 @@
+---
+name: ((deployment_name))
+
+instance_groups:
+- name: smb-server
+  azs: [z1,z2,z3]
+  instances: 1
+  persistent_disk_type: default
+  vm_type: default
+  stemcell: default
+  networks: [{name: default}]
+  jobs:
+  - name: smb-server
+    release: smb-server
+    properties:
+      users:
+        user-demo1: ((demo-password-1))
+        user-demo2: ((demo-password-2))
+      shares:
+        vol-demo:
+          "valid users": user-demo1 user-demo2
+          "writeable": no
+          "hosts allow": "0.0.0.0/0"
+
+variables:
+- name: demo-password-1
+  type: password
+- name: demo-password-2
+  type: password
+
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: latest
+
+update:
+  canaries: 0
+  canary_watch_time: 1000-60000
+  update_watch_time: 1000-60000
+  max_in_flight: 32
+  serial: false
+
+releases:
+- name: smb-server
+  version: latest

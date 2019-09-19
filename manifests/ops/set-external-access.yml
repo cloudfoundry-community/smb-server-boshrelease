@@ -1,0 +1,19 @@
+---
+- type: replace
+  path: /instance_groups/name=smb-server/networks/name=default
+  value:
+    name: default
+    default: [dns, gateway]
+
+- type: replace
+  path: /instance_groups/name=smb-server/networks/-
+  value:
+    name: public
+    static_ips: ((smb-public-ips))
+
+- type: replace
+  path: /instance_groups/name=smb-server/vm_extensions?
+  value: ((smb-vm-extensions))
+  # smb-vm-ext ports:
+  # - UDP: 137,138
+  # - TCP: 139.445

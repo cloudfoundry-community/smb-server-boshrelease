@@ -1,0 +1,5 @@
+check process smb-server
+  with pidfile /var/vcap/sys/run/smb-server/smb-server.pid
+  start program "/var/vcap/jobs/smb-server/bin/smb-server_ctl start"
+  stop program "/var/vcap/jobs/smb-server/bin/smb-server_ctl stop"
+  group vcap

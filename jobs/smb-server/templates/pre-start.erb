@@ -1,0 +1,81 @@
+#!/bin/bash
+
+set -e
+
+echo "Installing smb server..."
+(
+flock -x 200
+apt update
+apt install -y members
+apt install -y samba
+apt install -y mc
+) 200>/var/vcap/data/dpkg.lock
+
+if [ "$(pidof -s smbd)" != "" ]; then
+  service smbd stop
+fi
+
+
+echo "Preparing fresh SMB config..."
+smbcfg="/etc/samba/smb.conf"
+smbcfg_orig="${smbcfg}.original"
+if [ -f "$smbcfg_orig" ]; then
+  cp -f -T $smbcfg_orig $smbcfg
+else
+  cp -T $smbcfg $smbcfg_orig
+fi
+
+
+
+if [ ! $(getent group smbu) ]; then
+  echo "Creating smbu group..."
+  addgroup smbu
+fi
+userdel temp-smb-user &
+useradd temp-smb-user --group smbu
+
+
+echo "Creating SMB users..."
+exist_users="$(members smbu)"
+IFS=', ' read -r -a exist_users_arr <<< "$exist_users"
+
+<% p('users').each do |username,password| %>
+username="<%= username %>"
+password="<%= password %>"
+delete=($username)
+exist_users_arr=( "${exist_users_arr[@]/$delete}" )
+echo "setting up user $username"
+id -u $username &>/dev/null || useradd $username --group vcap --group smbu
+smbpasswd -a $username -s <<EOF
+$password
+$password
+EOF
+<% end %>
+
+echo "Removing SMB users..."
+for u2del in ${exist_users_arr[@]}
+do
+   echo "Deleting user: $u2del "
+   userdel $u2del &
+done
+
+echo "Configuring SMB shares..."
+root_path="/var/vcap/store/smb-server/shares"
+<% p('shares').each do |key,share| %>
+  share_id=<%= key %>
+  share_path="${root_path}/${share_id}"
+  echo "Configuring share: ${share_path} ..."
+  mkdir -p $share_path
+  chmod 775 $share_path
+  chown root:vcap $share_path
+
+  echo "[${share_id}]" >> $smbcfg
+  echo "  path = ${share_path}" >> $smbcfg
+  # echo "  create mask = 0755" >> $smbcfg
+  <% share.each do |skey,svalue| %>
+    echo "  <%= skey %> = <%= svalue %>" >> $smbcfg
+  <% end %>
+<% end %>
+
+echo "Installed smb server"
+exit 0

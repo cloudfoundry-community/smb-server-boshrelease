@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -u
+
+is_active_resp=$(systemctl is-active smbd)
+ping_resp=$(smbcontrol smbd ping)
+# echo "Service $is_active_resp / $ping_resp "
+
+if [[ "$is_active_resp" == "active" ]] && [[ "$ping_resp" == PONG* ]]; then
+  exit 0
+else
+  exit 1
+fi
