@@ -20,3 +20,7 @@ bosh -d smbs-dev deploy manifests/smb-server.yml
 5. Bind service with credentials: `cf bind-service voltest smbs-dev-vol-a -c '{"username":"user-a","password":"pass-a"}'`
 6. Start the test app: `cf voltest start`
 7. Navigate to the test app and test it.
+
+## TODO
+
+1. Clustering: https://wiki.samba.org/index.php/Configuring_clustered_Samba
