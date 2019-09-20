@@ -3,9 +3,6 @@
 ## Bosh Deploy
 
 ```
-profile=dev
-deployment_name=smbs-$profile
-
 bosh -d smbs-dev deploy manifests/smb-server.yml
   -o manifests/ops/set-external-access.yml  \
   -o manifests/ops/configure-shares-example.yml  \
