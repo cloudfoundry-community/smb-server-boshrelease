@@ -23,4 +23,5 @@ bosh -d smbs-dev deploy manifests/smb-server.yml
 
 ## TODO
 
-1. Clustering: https://wiki.samba.org/index.php/Configuring_clustered_Samba
+1. HA Cluster: https://wiki.samba.org/index.php/Configuring_clustered_Samba
+2. NFS Server Boshrelease based on: https://github.com/nfs-ganesha/nfs-ganesha/wiki/NFS-Ganesha-and-High-Availability
