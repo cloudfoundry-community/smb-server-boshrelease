@@ -1,7 +1,9 @@
 # SMB Server Boshrelease
 
-## Bosh Deploy
+## BOSH
 
+1. Create and upload dev release: `bosh create-release --force && bosh upload-release`
+2. Deploy:
 ```
 bosh -d smbs-dev deploy manifests/smb-server.yml
   -o manifests/ops/set-external-access.yml  \
