@@ -13,5 +13,5 @@ properties:
     description: "SMB users objects, username: password"
     default: {}
   shares:
-    description: "SMB shares objects, id: {writable, ....}"
+    description: "SMB shares objects, id: {read only, ....} - https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html"
     default: {}

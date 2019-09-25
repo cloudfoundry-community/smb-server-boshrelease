@@ -38,7 +38,7 @@ func hello(res http.ResponseWriter, req *http.Request) {
 func voltest(res http.ResponseWriter, req *http.Request) {
 	mountPointPath := getPath() + "/voltest.txt"
 
-	d1 := []byte("Hello Volumen, test time: "+ time.Now().String() +"!\n")
+	d1 := []byte("Hello Volume, test time: "+ time.Now().String() +"!\n")
 	err := ioutil.WriteFile(mountPointPath, d1, os.ModeAppend|0644)
 	if err != nil {
 		writeError(res, "Writing \n", err)

@@ -1,1 +1,1 @@
-cf bind-service voltest smbs-dev-vol-a -c '{"username":"user-a","password":"pass-a"}'
+cf bind-service voltest smbs-dev-share-a -c '{"username":"user-a","password":"pass-a"}'
