@@ -21,6 +21,24 @@ bosh -d smbs-dev deploy manifests/smb-server.yml
 6. Start the test app: `cf voltest start`
 7. Navigate to the test app and test it.
 
+## Windows
+
+- create connection:
+  ```
+  net use \\<smb-server-ip>\<share-name> /USER:<user-name>
+  ```
+
+- list connections:
+  ```
+  net use
+  ```
+
+- delete connection:
+  ```
+  net use \\<smb-server-ip>\<share-name> /delete
+  # delete all connections: net use * /delete 
+  ```
+
 ## TODO
 
 1. HA Cluster: https://wiki.samba.org/index.php/Configuring_clustered_Samba

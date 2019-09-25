@@ -19,15 +19,15 @@
 - type: replace
   path: /instance_groups/name=smb-server/jobs/name=smb-server/properties?/shares?
   value:
-     vol-a:
+     share-a:
        "valid users": "user-a user-ab"
        "read only": "no"
        "hosts allow": "0.0.0.0/0"
-     vol-b:
+     share-b:
        "valid users": "user-b user-ab"
        "read only": "no"
        "hosts allow": "0.0.0.0/0"
-     vol-ro:
+     share-ro:
        "valid users": "user-ro"
        "read only": "yes"
        "hosts allow": "0.0.0.0/0"

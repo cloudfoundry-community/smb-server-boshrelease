@@ -14,12 +14,12 @@ instance_groups:
     release: smb-server
     properties:
       users:
-        user-demo1: ((demo-password-1))
-        user-demo2: ((demo-password-2))
-      shares:
-        vol-demo:
-          "valid users": user-demo1 user-demo2
-          "writeable": no
+        user-demo1: "((demo-password-1))"
+        user-demo2: "((demo-password-2))"
+      shares: # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
+        share-demo:
+          "valid users": "user-demo1 user-demo2"
+          "read only": "yes"
           "hosts allow": "0.0.0.0/0"
 
 variables:
