@@ -10,24 +10,24 @@
 - type: replace
   path: /instance_groups/name=smb-server/jobs/name=smb-server/properties?/users?
   value:
-    user-a: pass-a
-    user-b: pass-b
-    user-ab: pass-ab
-    user-ro: pass-ro
+    user-a: "pass-a"
+    user-b: "pass-b"
+    user-ab: "pass-ab"
+    user-ro: "pass-ro"
 
 # https://www.samba.org/samba/docs/current/man-html/smb.conf.5.html
 - type: replace
   path: /instance_groups/name=smb-server/jobs/name=smb-server/properties?/shares?
   value:
      vol-a:
-       "valid users": user-a user-ab
-       "writeable": yes
+       "valid users": "user-a user-ab"
+       "read only": "no"
        "hosts allow": "0.0.0.0/0"
      vol-b:
-       "valid users": user-b user-ab
-       "writeable": yes
+       "valid users": "user-b user-ab"
+       "read only": "no"
        "hosts allow": "0.0.0.0/0"
      vol-ro:
-       "valid users": user-ro
-       "writeable": no
+       "valid users": "user-ro"
+       "read only": "yes"
        "hosts allow": "0.0.0.0/0"

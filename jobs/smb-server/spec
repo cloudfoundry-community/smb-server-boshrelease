@@ -2,9 +2,9 @@
 name: smb-server
 
 templates:
-  pre-start.erb: bin/pre-start
-  ctl.erb: bin/smb-server_ctl
-  health_check.erb: bin/health_check
+  pre-start.sh.erb: bin/pre-start
+  ctl.sh.erb: bin/smb-server_ctl
+  health_check.sh.erb: bin/health_check
 
 packages: []
 
