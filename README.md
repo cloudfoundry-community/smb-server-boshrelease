@@ -13,31 +13,27 @@ bosh -d smbs-dev deploy manifests/smb-server.yml
 
 ## Cloud Foundry
 
+### CF Operator
 1. Deploy SMB Volume Service to Cloud Foundry https://docs.cloudfoundry.org/running/deploy-vol-services.html#smb-example
 2. Enable it: `cf enable-service-access smb`
-3. Create service: `cf create-service smb Existing smbs-dev-share-a -c '{"share":"//IP-ADDRESS/share-a"}'`
-4. Push the test app [voltest](cf/voltest-app): `cf push --no-start`
-5. Bind service with credentials: `cf bind-service voltest smbs-dev-share-a -c '{"username":"user-a","password":"pass-a"}'`
-6. Start the test app: `cf voltest start`
-7. Navigate to the test app and test it.
+
+### Developer 
+- Create service: 
+  ```
+  cf create-service smb Existing smbs-dev-share-a -c '{"share":"//IP-ADDRESS/share-a"}'
+  ```
+- Push the app e.g. [voltest](cf/voltest-app): `cf push --no-start`
+- Bind service with credentials to the app: 
+  ```
+  cf bind-service voltest smbs-dev-share-a -c '{"username":"user-a","password":"pass-a", "mount":"/var/path"}'
+  ```
+- Start the app `cf voltest start` and test it.
 
 ## Windows
 
-- create connection:
-  ```
-  net use \\<smb-server-ip>\<share-name> /USER:<user-name>
-  ```
-
-- list connections:
-  ```
-  net use
-  ```
-
-- delete connection:
-  ```
-  net use \\<smb-server-ip>\<share-name> /delete
-  # delete all connections: net use * /delete 
-  ```
+- create connection: `net use \\<smb-server-ip>\<share-name> /USER:<user-name>`
+- list connections: `net use`
+- delete connection: `net use \\<smb-server-ip>\<share-name> /delete # delete all connections: net use * /delete`
 
 ## TODO
 
